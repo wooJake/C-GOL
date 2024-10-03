@@ -80,20 +80,30 @@ int main(){
                     ++neighbors[i][j];
                 }
                     
-                if(board1[i][j] == 1 && (neighbors[i][j] == 2 || neighbors[i][j] == 3)){
+                if(board1[i][j] == 1){
                     
-                    board2[i][j] = 1;
+                    printf("O");
+                    
+                    if(neighbors[i][j] == 2 || neighbors[i][j] == 3){
+                        
+                        board2[i][j] = 1;
+                    }
+                    else{
+                        
+                        board2[i][j] = 0;
+                    }
                 }
-                else if(board1[i][j] == 0 && neighbors[i][j] == 3){
+                else if(board1[i][j] == 0){
                     
-                    board2[i][j] = 1;
-                }
-                else{
+                    printf(" ");
                     
-                    board2[i][j] = 0;
+                    if(neighbors[i][j] == 3){
+                        
+                        board2[i][j] = 1;
+                    }
                 }
                 
-                printf("%d", board1[i][j]);
+                
             }
             printf("\n");
         }
