@@ -62,11 +62,7 @@ int main(){
                     
                     printf("O");
                     
-                    if(neighbors[i][j] == 2 || neighbors[i][j] == 3){
-                        
-                        board2[i][j] = 1;
-                    }
-                    else{
+                    if(neighbors[i][j] != 2 && neighbors[i][j] != 3){
                         
                         board2[i][j] = 0;
                     }
