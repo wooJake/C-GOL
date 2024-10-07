@@ -35,17 +35,17 @@ int main(){
         for(int i = 0; i < boardWidth; ++i){
             for(int j = 0; j < boardHeight; ++j){
 
-				if(board2[i][j] == 1){
+		if(board2[i][j] == 1){
 
-					++neighbors[i + 1][j + 0];
-					++neighbors[i + 1][j - 1];
-					++neighbors[i + 0][j - 1];
-					++neighbors[i - 1][j - 1];
-					++neighbors[i - 1][j + 0];
-					++neighbors[i - 1][j + 1];
-					++neighbors[i + 0][j + 1];
-					++neighbors[i + 1][j + 1];
-				}
+			++neighbors[i + 1][j + 0];
+			++neighbors[i + 1][j - 1];
+			++neighbors[i + 0][j - 1];
+			++neighbors[i - 1][j - 1];
+			++neighbors[i - 1][j + 0];
+			++neighbors[i - 1][j + 1];
+			++neighbors[i + 0][j + 1];
+			++neighbors[i + 1][j + 1];
+		}
             
                 board1[i][j] = board2[i][j];
             }
@@ -81,7 +81,7 @@ int main(){
                     }
                 }
 
-				neighbors[i][j] = 0;
+		neighbors[i][j] = 0;
             }
             printf("\n");
         }
