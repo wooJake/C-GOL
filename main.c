@@ -29,14 +29,25 @@ int main(){
     }
     
     //Looping
-    while(loops <= 256){
+    while(loops <= 1000){
         
         //Copying
         for(int i = 0; i < boardWidth; ++i){
             for(int j = 0; j < boardHeight; ++j){
+
+				if(board2[i][j] == 1){
+
+					++neighbors[i + 1][j + 0];
+					++neighbors[i + 1][j - 1];
+					++neighbors[i + 0][j - 1];
+					++neighbors[i - 1][j - 1];
+					++neighbors[i - 1][j + 0];
+					++neighbors[i - 1][j + 1];
+					++neighbors[i + 0][j + 1];
+					++neighbors[i + 1][j + 1];
+				}
             
                 board1[i][j] = board2[i][j];
-                neighbors[i][j] = 0;
             }
             printf("-");
         }
@@ -46,39 +57,6 @@ int main(){
         //Interacting
         for(int i = 0; i < boardWidth; ++i){
             for(int j = 0; j < boardHeight; ++j){
-                
-                if(board1[i + 1][j + 0] == 1){
-                    
-                    ++neighbors[i][j];
-                }
-                if(board1[i + 1][j - 1] == 1){
-                    
-                    ++neighbors[i][j];
-                }
-                if(board1[i + 0][j - 1] == 1){
-                    
-                    ++neighbors[i][j];
-                }
-                if(board1[i - 1][j - 1] == 1){
-                    
-                    ++neighbors[i][j];
-                }
-                if(board1[i - 1][j + 0] == 1){
-                    
-                    ++neighbors[i][j];
-                }
-                if(board1[i - 1][j + 1] == 1){
-                    
-                    ++neighbors[i][j];
-                }
-                if(board1[i + 0][j + 1] == 1){
-                    
-                    ++neighbors[i][j];
-                }
-                if(board1[i + 1][j + 1] == 1){
-                    
-                    ++neighbors[i][j];
-                }
                     
                 if(board1[i][j] == 1){
                     
@@ -102,8 +80,8 @@ int main(){
                         board2[i][j] = 1;
                     }
                 }
-                
-                
+
+				neighbors[i][j] = 0;
             }
             printf("\n");
         }
