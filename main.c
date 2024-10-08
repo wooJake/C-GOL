@@ -7,8 +7,8 @@ int main(){
     
 	srand(time(NULL));
 
-	int boardWidth = 24;
-	int boardHeight = 24;
+	int boardWidth = 30;
+	int boardHeight = 30;
 
 	int board1[boardWidth][boardHeight];
 	int board2[boardWidth][boardHeight];
@@ -53,27 +53,27 @@ int main(){
 		for(int i = 0; i < boardWidth; ++i){
 			for(int j = 0; j < boardHeight; ++j){
 				
-			if(board1[i][j] == 1){
+				if(board1[i][j] == 1){
 				
-				printf("O");
+					printf("O");
 				
-				if(neighbors[i][j] != 2 && neighbors[i][j] != 3){
+					if(neighbors[i][j] != 2 && neighbors[i][j] != 3){
 				
-				board2[i][j] = 0;
-				}
+						board2[i][j] = 0;
+					}
 		
-				neighbors[i][j] = 0;
-				continue;
-			}
+					neighbors[i][j] = 0;
+					continue;
+				}
 				
-			printf(" ");
+				printf(" ");
 			
-			if(neighbors[i][j] == 3){
+				if(neighbors[i][j] == 3){
 			
-				board2[i][j] = 1;
-			}
+					board2[i][j] = 1;
+				}
 			
-			neighbors[i][j] = 0;
+				neighbors[i][j] = 0;
 			}
 			printf("\n");
 		}
