@@ -7,8 +7,8 @@ int main(){
     
 	srand(time(NULL));
 
-	int boardWidth = 30;
-	int boardHeight = 30;
+	int boardWidth = 64;
+	int boardHeight = 64;
 
 	int board1[boardWidth][boardHeight];
 	int board2[boardWidth][boardHeight];
@@ -61,6 +61,7 @@ int main(){
 						if(neighbors[i][j] == k){
 							
 							board2[i][j] = survive[k];
+							break;
 						}
 					}
 		
@@ -75,6 +76,7 @@ int main(){
 					if(neighbors[i][j] == k){
 						
 						board2[i][j] = born[k];
+						break;
 					}
 				}
 			
