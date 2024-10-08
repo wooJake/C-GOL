@@ -38,12 +38,9 @@ int main(){
 		for(int i = 0; i < boardWidth; ++i){
 			for(int j = 0; j < boardHeight; ++j){
 
-				if(board2[i][j] == 1){
+				for(int k = 0; board2[i][j] == 1 && k < 8; ++k){
 
-					for(int k = 0; k < 8; ++k){
-
-						++neighbors[i + dir[k][0]][j + dir[k][1]];
-					}
+					++neighbors[i + dir[k][0]][j + dir[k][1]];
 				}
 			
 				board1[i][j] = board2[i][j];
