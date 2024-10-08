@@ -16,6 +16,8 @@ int main(){
 	int neighbors[boardWidth][boardHeight];
 
 	int dir[8][2] = {{1,0},{1,-1},{0,-1},{-1,-1},{-1,0},{-1,1},{0,1},{1,1}};
+	int born[9] = {0,0,0,0,1,0,0,0,0};
+	int survive[9] = {0,0,1,1,0,0,0,0,0};
 
 	int loops = 0;
 		
@@ -25,8 +27,6 @@ int main(){
 			
 			board1[i][j] = rand() % 2;
 			board2[i][j] = board1[i][j];
-			
-			printf("%d", board1[i][j]);
 		}
 	}
     
@@ -55,10 +55,13 @@ int main(){
 				if(board1[i][j] == 1){
 				
 					printf("O");
-				
-					if(neighbors[i][j] != 2 && neighbors[i][j] != 3){
-				
-						board2[i][j] = 0;
+
+					for(int k = 0; k < 8; ++k){
+
+						if(neighbors[i][j] == k){
+							
+							board2[i][j] = survive[k];
+						}
 					}
 		
 					neighbors[i][j] = 0;
