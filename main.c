@@ -28,7 +28,6 @@ int main(){
 			
 			printf("%d", board1[i][j]);
 		}
-		printf("\n");
 	}
     
 	//Looping
