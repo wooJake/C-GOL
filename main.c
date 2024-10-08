@@ -7,13 +7,15 @@ int main(){
     
 	srand(time(NULL));
 
-	int boardWidth = 64;
-	int boardHeight = 64;
+	int boardWidth = 24;
+	int boardHeight = 24;
 
 	int board1[boardWidth][boardHeight];
 	int board2[boardWidth][boardHeight];
 
 	int neighbors[boardWidth][boardHeight];
+
+	int dir[8][2] = {{1,0},{1,-1},{0,-1},{-1,-1},{-1,0},{-1,1},{0,1},{1,1}};
 
 	int loops = 0;
 		
@@ -35,17 +37,13 @@ int main(){
 		//Copying
 		for(int i = 0; i < boardWidth; ++i){
 			for(int j = 0; j < boardHeight; ++j){
-		
+
 				if(board2[i][j] == 1){
 
-					++neighbors[i + 1][j + 0];
-					++neighbors[i + 1][j - 1];
-					++neighbors[i + 0][j - 1];
-					++neighbors[i - 1][j - 1];
-					++neighbors[i - 1][j + 0];
-					++neighbors[i - 1][j + 1];
-					++neighbors[i + 0][j + 1];
-					++neighbors[i + 1][j + 1];
+					for(int k = 0; k < 8; ++k){
+
+						++neighbors[i + dir[k][0]][j + dir[k][1]];
+					}
 				}
 			
 				board1[i][j] = board2[i][j];
@@ -79,7 +77,6 @@ int main(){
 			}
 			
 			neighbors[i][j] = 0;
-			continue;
 			}
 			printf("\n");
 		}
