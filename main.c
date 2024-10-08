@@ -84,7 +84,7 @@ int main(){
 		}
 		
 		++loops;
-		sleep(1);
+		usleep( 60000 );
 	}
 
     return 0;
