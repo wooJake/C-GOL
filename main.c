@@ -16,7 +16,7 @@ int main(){
 	int neighbors[boardWidth][boardHeight];
 
 	int dir[8][2] = {{1,0},{1,-1},{0,-1},{-1,-1},{-1,0},{-1,1},{0,1},{1,1}};
-	int born[9] = {0,0,0,0,1,0,0,0,0};
+	int born[9] = {0,0,0,1,0,0,0,0,0};
 	int survive[9] = {0,0,1,1,0,0,0,0,0};
 
 	int loops = 0;
@@ -69,10 +69,13 @@ int main(){
 				}
 				
 				printf(" ");
-			
-				if(neighbors[i][j] == 3){
-			
-					board2[i][j] = 1;
+
+				for(int k = 0; k < 8; ++k){
+
+					if(neighbors[i][j] == k){
+						
+						board2[i][j] = born[k];
+					}
 				}
 			
 				neighbors[i][j] = 0;
