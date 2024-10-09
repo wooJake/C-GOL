@@ -6,11 +6,11 @@
 int width = 64;
 int height = 64;
 
-int bornSurvive[2][9] = {{0,0,1,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0,0}};
-
 int dir[8][2] = {{1,0},{1,-1},{0,-1},{-1,-1},{-1,0},{-1,1},{0,1},{1,1}};
 
-int generations = 3;
+int bornSurvive[2][9] = {{0,0,0,1,0,0,0,0,0}, {0,0,1,1,0,0,0,0,0}};
+int generations = 2;
+
 int main(){
     
 	srand(time(NULL));
@@ -32,7 +32,7 @@ int main(){
 	}
     
 	//Looping
-	while(loops <= 1000){
+	while(loops <= 1024){
 			
 		//Copying
 		for(int i = 0; i < width; ++i){
