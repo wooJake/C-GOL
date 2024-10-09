@@ -6,24 +6,11 @@
 int width = 64;
 int height = 64;
 
-int bornSurvive[2][9] = {{0,0,0,1,0,0,0,0,0}, {0,0,1,1,0,0,0,0,0}};
+int bornSurvive[2][9] = {{0,0,1,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0,0}};
 
 int dir[8][2] = {{1,0},{1,-1},{0,-1},{-1,-1},{-1,0},{-1,1},{0,1},{1,1}};
 
-int ReturnDeadAlive(int neighborsNum, int i, int j, int s){
-
-	int Out = 0;
-	for(int k = 0; k < 8; ++k){
-
-		if(neighborsNum == k){
-							
-			Out = bornSurvive[s][k];
-			break;
-		}
-	}
-
-	return Out;
-}
+int generations = 3;
 int main(){
     
 	srand(time(NULL));
@@ -39,7 +26,7 @@ int main(){
 	for(int i = 0; i < width; ++i){
 		for(int j = 0; j < height; ++j){
 			
-			board1[i][j] = rand() % 2;
+			board1[i][j] = rand() % generations;
 			board2[i][j] = board1[i][j];
 		}
 	}
@@ -65,18 +52,35 @@ int main(){
 		for(int i = 0; i < width; ++i){
 			for(int j = 0; j < height; ++j){
 				
-				//Checking if selected cell is alive
-				if(board1[i][j] == 1){
-				
-					printf("%c", 'O');
-					board2[i][j] = ReturnDeadAlive(neighbors[i][j], i, j, 1);
+				board2[i][j] = 0;
+
+				//Checking if selected cell is alive then adding to it 1 until it is at the generations count.
+				if(board1[i][j] >= 1){
+
+					board2[i][j] = (board1[i][j] + 1) % generations;
+				}
+				//Performing rules
+				for(int k = 0; k < 9; ++k){
+					
+					if((bornSurvive[0][k] && board1[i][j] == 0 || 
+						bornSurvive[1][k] && board1[i][j] == 1) && 
+						neighbors[i][j] == k){
+
+						board2[i][j] = 1;
+						break;
+					}
+				}
+				//Making Dead state blank
+				if(board2[i][j] == 0){
+
+					printf(" ");
 				}
 				else{
-				
-					//Otherwise if selected cell is dead
-					printf("%c", ' ');
-					board2[i][j] = ReturnDeadAlive(neighbors[i][j], i, j, 0);
+
+					//Printing Alive (or in between) state to screen
+					printf("%d", board2[i][j]);
 				}
+				
 				neighbors[i][j] = 0;
 			}
 			printf("\n");
