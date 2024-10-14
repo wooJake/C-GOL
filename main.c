@@ -6,10 +6,11 @@
 int width = 144;
 int height = 64;
 
+//Initializing neighbor directions from a given point.
 int dir[8][2] = {{1,0},{1,-1},{0,-1},{-1,-1},{-1,0},{-1,1},{0,1},{1,1}};
 
-int bornSurvive[2][9] = {{0,0,1,0,0,0,0,0,0}, {0,0,0,1,1,1,0,0,0}};
-int generations = 4;
+int bornSurvive[2][9] = {{0,0,0,1,0,0,0,0,0}, {0,0,1,1,0,0,0,0,0}};
+int generations = 2;
 
 int main(){
     
@@ -17,12 +18,11 @@ int main(){
 
 	int board1[height][width];
 	int board2[height][width];
-
 	int neighbors[height][width];
 
 	int loops = 0;
 		
-	//Setting up board
+	//Setting up board.
 	for(int i = 0; i < height; ++i){
 		for(int j = 0; j < width; ++j){
 			
@@ -30,11 +30,9 @@ int main(){
 			board2[i][j] = board1[i][j];
 		}
 	}
-
-	//Looping
+	//Looping.
 	while(loops <= 1024){
-			
-		//Copying
+		//Copying.
 		for(int i = 0; i < height; ++i){
 			for(int j = 0; j < width; ++j){
 
@@ -47,8 +45,7 @@ int main(){
 			}
 		}
 		system("clear");
-		
-		//Interacting
+		//Interacting.
 		for(int i = 0; i < height; ++i){
 			for(int j = 0; j < width; ++j){
 				
@@ -59,7 +56,7 @@ int main(){
 
 					board2[i][j] = (board1[i][j] + 1) % generations;
 				}
-				//Performing rules
+				//Performing rules.
 				for(int k = 0; k < 9; ++k){
 					
 					//Born / survive check.
@@ -71,20 +68,20 @@ int main(){
 						break;
 					}
 				}
-				//Making Dead state blank
+
+				//Setting neighbors to 0.
+				neighbors[i][j] = 0;
+
+				//Making Dead state blank.
 				if(board2[i][j] == 0){
 
 					//If Dead print nothing.
 					printf(" ");
+					continue;
 				}
-				else{
 
-					//Printing Alive (or in between) state to screen
-					printf("%d", board2[i][j]);
-				}
-				
-				//Setting neighbors to 0.
-				neighbors[i][j] = 0;
+				//Printing Alive (or in between) state to screen.
+				printf("%d", board2[i][j]);
 			}
 			printf("\n");
 		}
