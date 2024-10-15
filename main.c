@@ -9,9 +9,23 @@ int height = 64;
 //Initializing neighbor directions from a given point.
 int dir[8][2] = {{1,0},{1,-1},{0,-1},{-1,-1},{-1,0},{-1,1},{0,1},{1,1}};
 
+int BSRule(int i, int j, int n, int board_in, int board_out, int neighbors, int bs[2][9]){
+
+	int bornRule = bs[0][n] && board_in == 0;
+	int surviveRule = bs[1][n] && board_in == 1;
+
+	//Born / survive and neighbors check.
+	if((bornRule || surviveRule) && neighbors == n){
+
+		board_out = 1;
+	}
+
+	return board_out;
+}
+
 int main(){
 
-	int bornSurvive[2][9] = {{0,0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0,0}};
+	int bornSurvive[2][9] = {{0,0,0,1,0,0,0,0,0}, {0,0,1,1,0,0,0,0,0}};
 	int generations;
 
 	printf("Input amount of generations: \n");
@@ -79,17 +93,15 @@ int main(){
 					board2[i][j] = (board1[i][j] + 1) % generations;
 				}
 				//Performing rules.
-				for(int k = 0; k < 9; ++k){
-					
-					//Born / survive check.
-					if((bornSurvive[0][k] && board1[i][j] == 0 || 
-						bornSurvive[1][k] && board1[i][j] == 1) && 
-						neighbors[i][j] == k){
-
-						board2[i][j] = 1;
-						break;
-					}
-				}
+				board2[i][j] = BSRule(i, j, 0, board1[i][j], board2[i][j], neighbors[i][j], bornSurvive);
+				board2[i][j] = BSRule(i, j, 1, board1[i][j], board2[i][j], neighbors[i][j], bornSurvive);
+				board2[i][j] = BSRule(i, j, 2, board1[i][j], board2[i][j], neighbors[i][j], bornSurvive);
+				board2[i][j] = BSRule(i, j, 3, board1[i][j], board2[i][j], neighbors[i][j], bornSurvive);
+				board2[i][j] = BSRule(i, j, 4, board1[i][j], board2[i][j], neighbors[i][j], bornSurvive);
+				board2[i][j] = BSRule(i, j, 5, board1[i][j], board2[i][j], neighbors[i][j], bornSurvive);
+				board2[i][j] = BSRule(i, j, 6, board1[i][j], board2[i][j], neighbors[i][j], bornSurvive);
+				board2[i][j] = BSRule(i, j, 7, board1[i][j], board2[i][j], neighbors[i][j], bornSurvive);
+				board2[i][j] = BSRule(i, j, 8, board1[i][j], board2[i][j], neighbors[i][j], bornSurvive);
 
 				//Setting neighbors to 0.
 				neighbors[i][j] = 0;
@@ -114,16 +126,28 @@ int main(){
 
 	printf("\nGenerations: ");
 	printf("%d", generations);
+
 	printf("\nBorn: ");
-	for(int i = 0; i < 9; ++i){
+	printf("%d", bornSurvive[0][0]);
+	printf("%d", bornSurvive[0][1]);
+	printf("%d", bornSurvive[0][2]);
+	printf("%d", bornSurvive[0][3]);
+	printf("%d", bornSurvive[0][4]);
+	printf("%d", bornSurvive[0][5]);
+	printf("%d", bornSurvive[0][6]);
+	printf("%d", bornSurvive[0][7]);
+	printf("%d", bornSurvive[0][8]);
 
-		printf("%d", bornSurvive[0][i]);
-	}
 	printf("\nSurvive: ");
-	for(int i = 0; i < 9; ++i){
-
-		printf("%d", bornSurvive[1][i]);
-	}
+	printf("%d", bornSurvive[1][0]);
+	printf("%d", bornSurvive[1][1]);
+	printf("%d", bornSurvive[1][2]);
+	printf("%d", bornSurvive[1][3]);
+	printf("%d", bornSurvive[1][4]);
+	printf("%d", bornSurvive[1][5]);
+	printf("%d", bornSurvive[1][6]);
+	printf("%d", bornSurvive[1][7]);
+	printf("%d", bornSurvive[1][8]);
 	printf("\n");
 
     return 0;
