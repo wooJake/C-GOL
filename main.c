@@ -9,11 +9,26 @@ int height = 64;
 //Initializing neighbor directions from a given point.
 int dir[8][2] = {{1,0},{1,-1},{0,-1},{-1,-1},{-1,0},{-1,1},{0,1},{1,1}};
 
-int bornSurvive[2][9] = {{0,0,0,1,0,0,0,0,0}, {0,0,1,1,0,0,0,0,0}};
-int generations = 2;
-
 int main(){
-    
+
+	int bornSurvive[2][9] = {{0,0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0,0}};
+	int generations;
+
+	printf("Input amount of generations: \n");
+	scanf("%d", &generations);
+	printf("Input born rules: \n");
+	for(int i = 0; i < 9; ++i){
+
+		printf("Rule %d:", i);
+		scanf("%d", &bornSurvive[0][i]);
+	}
+	printf("Input survive rules: \n");
+    for(int i = 0; i < 9; ++i){
+
+		printf("Rule %d:", i);
+		scanf("%d", &bornSurvive[1][i]);
+	}
+
 	srand(time(NULL));
 
 	int board1[height][width];
@@ -31,14 +46,21 @@ int main(){
 		}
 	}
 	//Looping.
-	while(loops <= 1024){
+	while(loops < 256){
 		//Copying.
 		for(int i = 0; i < height; ++i){
 			for(int j = 0; j < width; ++j){
 
-				for(int k = 0; board2[i][j] == 1 && k < 8; ++k){
+				if(board2[i][j] == 1){
 
-					++neighbors[i + dir[k][0]][j + dir[k][1]];
+					++neighbors[i + dir[0][0]][j + dir[0][1]];
+					++neighbors[i + dir[1][0]][j + dir[1][1]];
+					++neighbors[i + dir[2][0]][j + dir[2][1]];
+					++neighbors[i + dir[3][0]][j + dir[3][1]];
+					++neighbors[i + dir[4][0]][j + dir[4][1]];
+					++neighbors[i + dir[5][0]][j + dir[5][1]];
+					++neighbors[i + dir[6][0]][j + dir[6][1]];
+					++neighbors[i + dir[7][0]][j + dir[7][1]];
 				}
 			
 				board1[i][j] = board2[i][j];
@@ -89,6 +111,20 @@ int main(){
 		++loops;
 		usleep( 60000 );
 	}
+
+	printf("\nGenerations: ");
+	printf("%d", generations);
+	printf("\nBorn: ");
+	for(int i = 0; i < 9; ++i){
+
+		printf("%d", bornSurvive[0][i]);
+	}
+	printf("\nSurvive: ");
+	for(int i = 0; i < 9; ++i){
+
+		printf("%d", bornSurvive[1][i]);
+	}
+	printf("\n");
 
     return 0;
 }
