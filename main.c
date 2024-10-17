@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include <omp.h>
 
 int width = 144;
 int height = 64;
@@ -22,7 +23,13 @@ int BSRule(int i, int j, int n, int board_in, int board_out, int neighbors, int 
 
 	return board_out;
 }
+int GetRule(int bs[2][9], int bsi, int i){
 
+	printf("Rule %d:", i);
+	scanf("%d", &bs[bsi][i]);
+
+	return bs[bsi][i];
+}
 int main(){
 
 	int bornSurvive[2][9] = {{0,0,0,1,0,0,0,0,0}, {0,0,1,1,0,0,0,0,0}};
@@ -30,18 +37,28 @@ int main(){
 
 	printf("Input amount of generations: \n");
 	scanf("%d", &generations);
+
 	printf("Input born rules: \n");
-	for(int i = 0; i < 9; ++i){
+	bornSurvive[0][0] = GetRule(bornSurvive, 0, 0);
+	bornSurvive[0][1] = GetRule(bornSurvive, 0, 1);
+	bornSurvive[0][2] = GetRule(bornSurvive, 0, 2);
+	bornSurvive[0][3] = GetRule(bornSurvive, 0, 3);
+	bornSurvive[0][4] = GetRule(bornSurvive, 0, 4);
+	bornSurvive[0][5] = GetRule(bornSurvive, 0, 5);
+	bornSurvive[0][6] = GetRule(bornSurvive, 0, 6);
+	bornSurvive[0][7] = GetRule(bornSurvive, 0, 7);
+	bornSurvive[0][8] = GetRule(bornSurvive, 0, 8);
 
-		printf("Rule %d:", i);
-		scanf("%d", &bornSurvive[0][i]);
-	}
 	printf("Input survive rules: \n");
-    for(int i = 0; i < 9; ++i){
-
-		printf("Rule %d:", i);
-		scanf("%d", &bornSurvive[1][i]);
-	}
+	bornSurvive[1][0] = GetRule(bornSurvive, 1, 0);
+	bornSurvive[1][1] = GetRule(bornSurvive, 1, 1);
+	bornSurvive[1][2] = GetRule(bornSurvive, 1, 2);
+	bornSurvive[1][3] = GetRule(bornSurvive, 1, 3);
+	bornSurvive[1][4] = GetRule(bornSurvive, 1, 4);
+	bornSurvive[1][5] = GetRule(bornSurvive, 1, 5);
+	bornSurvive[1][6] = GetRule(bornSurvive, 1, 6);
+	bornSurvive[1][7] = GetRule(bornSurvive, 1, 7);
+	bornSurvive[1][8] = GetRule(bornSurvive, 1, 8);
 
 	srand(time(NULL));
 
@@ -62,6 +79,7 @@ int main(){
 	//Looping.
 	while(loops < 256){
 		//Copying.
+		#pragma omp parallel for
 		for(int i = 0; i < height; ++i){
 			for(int j = 0; j < width; ++j){
 
@@ -82,6 +100,7 @@ int main(){
 		}
 		system("clear");
 		//Interacting.
+		#pragma omp parallel for
 		for(int i = 0; i < height; ++i){
 			for(int j = 0; j < width; ++j){
 				
