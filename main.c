@@ -8,8 +8,11 @@ int width = 144;
 int height = 64;
 
 //Initializing neighbor directions from a given point.
-int dir[8][2] = { 1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}, {0,1}, {1,1}};
+int dir[8][2] = {{ 1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}, {0,1}, {1,1}};
+//Strings for making code shorter.
 char str1[3][50] = {"Input born rules: ", "Input survive rules: ", "Input amount of generations: "};
+
+char str2[3][50] = {"Born: ", "Survive: ", "Generations: "};
 
 int BSRule(int i, int j, int n, int board_in, int board_out, int neighbors, int bs[2][9]){
 
@@ -71,12 +74,9 @@ int main(){
 		for(int i = 0; i < height; ++i){
 			for(int j = 0; j < width; ++j){
 
-				if(board2[i][j] == 1){
+				for(int k = 0; board2[i][j] == 1 && k < 8; ++k){
 
-					for(int k = 0; k < 8; ++k){
-
-						++neighbors[i + dir[k][0]][j + dir[k][1]];
-					}
+					++neighbors[i + dir[k][0]][j + dir[k][1]];
 				}
 			
 				board1[i][j] = board2[i][j];
@@ -122,18 +122,14 @@ int main(){
 		usleep( 60000 );
 	}
 
-	printf("\nGenerations: ");
+	printf("\n%s", str2[2]);
 	printf("%d", generations);
+	for(int i = 0; i < 2; ++i){
+		printf("\n%s", str2[i]);
+		for(int j = 0; j < 9; ++j){
 
-	printf("\nBorn: ");
-	for(int i = 0; i < 9; ++i){
-
-		printf("%d", bornSurvive[0][i]);
-	}
-	printf("\nSurvive: ");
-	for(int i = 0; i < 9; ++i){
-
-		printf("%d", bornSurvive[1][i]);
+			printf("%d", bornSurvive[i][j]);
+		}
 	}
 	printf("\n");
 
