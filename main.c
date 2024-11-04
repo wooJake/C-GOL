@@ -8,10 +8,10 @@ int width = 144;
 int height = 64;
 
 //Initializing neighbor directions from a given point.
+//right, bottom right, down, bottom left, left, top left, top, top right.
 int dir[8][2] = {{ 1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}, {0,1}, {1,1}};
 //Strings for making code shorter.
 char str1[3][50] = {"Input born rules: ", "Input survive rules: ", "Input amount of generations: "};
-
 char str2[3][50] = {"Born: ", "Survive: ", "Generations: "};
 
 int BSRule(int i, int j, int n, int board_in, int board_out, int neighbors, int bs[2][9]){
@@ -37,19 +37,19 @@ int GetRule(int bs[2][9], int bsi, int i){
 int main(){
 
 	int bornSurvive[2][9] = {{0,0,0,1,0,0,0,0,0}, {0,0,1,1,0,0,0,0,0}};
-	int generations;
+	int generations = 2;
 
-	printf("%s\n", str1[2]);
-	scanf("%d", &generations);
+	//printf("%s\n", str1[2]);
+	//scanf("%d", &generations);
 
-	for(int i = 0; i < 2; ++i){
+	//for(int i = 0; i < 2; ++i){
 
-		printf("%s\n", str1[i]);
-		for(int j = 0; j < 9; ++j){
+		//printf("%s\n", str1[i]);
+		//for(int j = 0; j < 9; ++j){
 
-			bornSurvive[i][j] = GetRule(bornSurvive, i, j);
-		}
-	}
+			//bornSurvive[i][j] = GetRule(bornSurvive, i, j);
+		//}
+	//}
 
 	srand(time(NULL));
 
@@ -68,7 +68,11 @@ int main(){
 		}
 	}
 	//Looping.
-	while(loops < 256){
+	while(loops < 255){
+		
+		//Clearing the screen.
+		system("clear");
+
 		//Copying.
 		#pragma omp parallel for
 		for(int i = 0; i < height; ++i){
@@ -76,13 +80,32 @@ int main(){
 
 				for(int k = 0; board2[i][j] == 1 && k < 8; ++k){
 
-					++neighbors[i + dir[k][0]][j + dir[k][1]];
+					//Making torus world.
+					int sideX = 0;
+					int sideY = 0;
+					if(j == 0 && k == 4){
+
+						sideX = width;
+					}
+					else if(j == width - 1 && k == 0){
+
+						sideX = 1 + width;
+					}
+					if(i == 0 && k == 6){
+
+						sideY = height;
+					}
+					else if(i == height - 1 && k == 2){
+
+						sideY = 1 + height;
+					}
+
+					++neighbors[i + dir[k][0] + sideX][j + dir[k][1] + sideY];
 				}
 			
 				board1[i][j] = board2[i][j];
 			}
 		}
-		system("clear");
 		//Interacting.
 		#pragma omp parallel for
 		for(int i = 0; i < height; ++i){
