@@ -83,7 +83,7 @@ int main(){
 		}
 	}
 	//Looping.
-	while(1){
+	while(loops < 1024){
 
 		//Copying.
 		#pragma omp parallel for
