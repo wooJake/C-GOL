@@ -4,8 +4,9 @@
 #include <unistd.h>
 #include <omp.h>
 
-int width = 144;
-int height = 64;
+const int width = 144;
+const int height = 64;
+const int N = 9;
 
 //Initializing neighbor directions from a given point.
 //right, bottom right, down, bottom left, left, top left, top, top right.
@@ -29,7 +30,7 @@ int OutBounds(int x, int z, int wh, int type){
 
 	return posx;
 }
-int BSRule(int i, int j, int n, int board_in, int board_out, int neighbors, int bs[2][9]){
+int BSRule(int i, int j, int n, int board_in, int board_out, int neighbors, int bs[2][N]){
 
 	int bornRule = bs[0][n] && board_in == 0;
 	int surviveRule = bs[1][n] && board_in == 1;
@@ -42,7 +43,7 @@ int BSRule(int i, int j, int n, int board_in, int board_out, int neighbors, int 
 
 	return board_out;
 }
-int GetRule(int bs[2][9], int bsi, int i){
+int GetRule(int bs[2][N], int bsi, int i){
 
 	printf("Rule %d:", i);
 	scanf("%d", &bs[bsi][i]);
@@ -60,7 +61,7 @@ int main(){
 	for(int i = 0; i < 2; ++i){
 
 		printf("%s\n", str1[i]);
-		for(int j = 0; j < 9; ++j){
+		for(int j = 0; j < N; ++j){
 
 			bornSurvive[i][j] = GetRule(bornSurvive, i, j);
 		}
@@ -116,7 +117,7 @@ int main(){
 					board2[i][j] = (board1[i][j] + 1) % generations;
 				}
 				//Performing rules.
-				for(int k = 0; k < 9; ++k){
+				for(int k = 0; k < N; ++k){
 
 					board2[i][j] = BSRule(i, j, k, board1[i][j], board2[i][j], neighbors[i][j], bornSurvive);
 				}
@@ -146,7 +147,7 @@ int main(){
 	printf("%d", generations);
 	for(int i = 0; i < 2; ++i){
 		printf("\n%s", str2[i]);
-		for(int j = 0; j < 9; ++j){
+		for(int j = 0; j < N; ++j){
 
 			printf("%d", bornSurvive[i][j]);
 		}
