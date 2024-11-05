@@ -14,6 +14,21 @@ int dir[8][2] = {{ 1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}, {0,1}, {1,1}};
 char str1[3][50] = {"Input born rules: ", "Input survive rules: ", "Input amount of generations: "};
 char str2[3][50] = {"Born: ", "Survive: ", "Generations: "};
 
+int OutBounds(int x, int z, int wh, int type){
+
+	int posx = x + dir[z][type];
+
+	if(posx < 0){
+
+		posx = wh - 1;
+	}
+	else if(posx > wh - 1){
+
+		posx = 0;
+	}
+
+	return posx;
+}
 int BSRule(int i, int j, int n, int board_in, int board_out, int neighbors, int bs[2][9]){
 
 	int bornRule = bs[0][n] && board_in == 0;
@@ -39,17 +54,17 @@ int main(){
 	int bornSurvive[2][9] = {{0,0,0,1,0,0,0,0,0}, {0,0,1,1,0,0,0,0,0}};
 	int generations = 2;
 
-	//printf("%s\n", str1[2]);
-	//scanf("%d", &generations);
+	printf("%s\n", str1[2]);
+	scanf("%d", &generations);
 
-	//for(int i = 0; i < 2; ++i){
+	for(int i = 0; i < 2; ++i){
 
-		//printf("%s\n", str1[i]);
-		//for(int j = 0; j < 9; ++j){
+		printf("%s\n", str1[i]);
+		for(int j = 0; j < 9; ++j){
 
-			//bornSurvive[i][j] = GetRule(bornSurvive, i, j);
-		//}
-	//}
+			bornSurvive[i][j] = GetRule(bornSurvive, i, j);
+		}
+	}
 
 	srand(time(NULL));
 
@@ -68,7 +83,7 @@ int main(){
 		}
 	}
 	//Looping.
-	while(loops < 1024){
+	while(1){
 
 		//Copying.
 		#pragma omp parallel for
@@ -78,27 +93,7 @@ int main(){
 				for(int k = 0; board2[i][j] == 1 && k < 8; ++k){
 
 					//Making torus world.
-					int posx = j + dir[k][0];
-					int posy = i + dir[k][1];
-
-					if(j + dir[k][0] < 0){
-
-						posx = width - 1;
-					}
-					else if(j + dir[k][0] > width - 1){
-
-						posx = 0;
-					}
-					if(i + dir[k][1] < 0){
-
-						posy = height - 1;
-					}
-					else if(i + dir[k][1] > height - 1){
-
-						posy = 0;
-					}
-
-					++neighbors[posy][posx];
+					++neighbors[OutBounds(i, k, height, 1)][OutBounds(j, k, width, 0)];
 				}
 			
 				board1[i][j] = board2[i][j];
