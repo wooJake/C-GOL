@@ -68,10 +68,7 @@ int main(){
 		}
 	}
 	//Looping.
-	while(loops < 255){
-		
-		//Clearing the screen.
-		system("clear");
+	while(loops < 1024){
 
 		//Copying.
 		#pragma omp parallel for
@@ -81,31 +78,36 @@ int main(){
 				for(int k = 0; board2[i][j] == 1 && k < 8; ++k){
 
 					//Making torus world.
-					int sideX = 0;
-					int sideY = 0;
-					if(j == 0 && k == 4){
+					int posx = j + dir[k][0];
+					int posy = i + dir[k][1];
 
-						sideX = width;
+					if(j + dir[k][0] < 0){
+
+						posx = width - 1;
 					}
-					else if(j == width - 1 && k == 0){
+					else if(j + dir[k][0] > width - 1){
 
-						sideX = 1 + width;
+						posx = 0;
 					}
-					if(i == 0 && k == 6){
+					if(i + dir[k][1] < 0){
 
-						sideY = height;
+						posy = height - 1;
 					}
-					else if(i == height - 1 && k == 2){
+					else if(i + dir[k][1] > height - 1){
 
-						sideY = 1 + height;
+						posy = 0;
 					}
 
-					++neighbors[i + dir[k][0] + sideX][j + dir[k][1] + sideY];
+					++neighbors[posy][posx];
 				}
 			
 				board1[i][j] = board2[i][j];
 			}
 		}
+
+		//Clearing the screen.
+		system("clear");
+
 		//Interacting.
 		#pragma omp parallel for
 		for(int i = 0; i < height; ++i){
