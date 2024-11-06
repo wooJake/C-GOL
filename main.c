@@ -17,15 +17,15 @@ char str2[3][50] = {"Born: ", "Survive: ", "Generations: "};
 
 int OutBounds(int x, int z, int wh, int type){
 
-	int posx = 0;
+	int posx = posx = x + dir[z][type];
 
 	if(posx < 0){
 
 		posx = wh - 1;
 	}
-	else if(posx < wh - 1){
+	else if(posx > wh - 1){
 
-		posx = x + dir[z][type];
+		posx = 0;
 	}
 
 	return posx;
